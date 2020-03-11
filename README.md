@@ -91,6 +91,7 @@ In this example it will be `Deferred<DeepThought>`:
 
 ```php
 use Later\Interfaces\Deferred;
+use function Later\lazy;
 
 final class HyperIntelligentMice
 {
@@ -99,16 +100,20 @@ final class HyperIntelligentMice
 
     public function __construct(DeepThought $deepThought)
     {
-        $this->supercomputer = later(static function () use ($deepThought): iterable {
-            $deepThought->solveTheQuestion();
+        $this->supercomputer = lazy(self::useDeepThought($deepThought));
+    }
 
-            yield $deepThought;
-        });
+    /** @return iterable<DeepThought> */
+    private static function useDeepThought(DeepThought $deepThought): iterable
+    {
+        $deepThought->solveTheQuestion();
+
+        yield $deepThought;
     }
 
     public function getAnswer(): int
     {
-        return $this->supercomputer->getSupercomputer()->getAnswer();
+        return $this->supercomputer->get()->getAnswer();
     }
 }
 ```
