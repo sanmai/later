@@ -34,14 +34,14 @@ Now pass it to `later()`, a static wrapper returning a `Deferred` object:
 $deferredMaker = later($deepThoughtMaker);
 ```
 
-And then call `get()` when needed:
+And then call `get()` when needed, as many times as needed:
 
 ```php
 $deferredMaker->get()->getAnswer(); // 42
 $deferredMaker->get()->getAnswer(); // same 42
 ```
 
-The generator guarantees it will be executed only once.
+The generator will be executed only once.
 
 # Discussion
 
