@@ -32,11 +32,11 @@ final class HyperIntelligentMice
 
     public function __construct(DeepThought $deepThought)
     {
-        $this->supercomputer = lazy(self::useDeepThought($deepThought));
+        $this->supercomputer = lazy(self::updateDeepThought($deepThought));
     }
 
     /** @return iterable<DeepThought> */
-    private static function useDeepThought(DeepThought $deepThought): iterable
+    private static function updateDeepThought(DeepThought $deepThought): iterable
     {
         $deepThought->solveTheQuestion();
 

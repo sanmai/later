@@ -100,11 +100,11 @@ final class HyperIntelligentMice
 
     public function __construct(DeepThought $deepThought)
     {
-        $this->supercomputer = lazy(self::useDeepThought($deepThought));
+        $this->supercomputer = lazy(self::updateDeepThought($deepThought));
     }
 
     /** @return iterable<DeepThought> */
-    private static function useDeepThought(DeepThought $deepThought): iterable
+    private static function updateDeepThought(DeepThought $deepThought): iterable
     {
         $deepThought->solveTheQuestion();
 
@@ -127,7 +127,7 @@ The underlying `Deferred` object is fairly lax about input types. It will be hap
 This makes it super easy to use in mocks:
 
 ```php
-$this->lazyDependency = lazy([$myObject]);
+$this->lazyDependency = lazy([$myDependency]);
 ```
 
 And that's it. No need to go through loops assembling closures and whatnot.
@@ -135,6 +135,10 @@ And that's it. No need to go through loops assembling closures and whatnot.
 If nothing else, one can make a common mock for it:
 
 ```php
-$this->createMock(\Later\Interfaces\Deferred::class);
+$deferredMock = $this->createMock(\Later\Interfaces\Deferred::class);
+$deferredMock
+    ->method('get')
+    ->willReturn($myDependency)
+;
 ```
 
