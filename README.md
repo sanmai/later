@@ -39,45 +39,62 @@ $deferred->get()->getAnswer(); // same 42
 
 Using a generator instead of a traditional callback comes with a major benefits: any generator comes with a guarantee from the language that it will be used exactly once. You can be sure that it won't be called twice.
 
-# Discussion
+But that's not all: read on.
+
+## Extended use
+
+Making a closure generator on the spot isn't always convenient. And not to say these closures are much different from all-too-familiar callbacks. Not at all different from the looks of them.
+
+The power of this pattern is in its ability to make use of any function, previously returning a single value, without any need for any additional callbacks or closures.
+
+Consider this diff:
+
+```diff
+ private function makeFooBar()
+ {
+    //...
+
+-    return $foo;
++    yield $foo;
+ }
+```
+
+After adding `Deferred` to the mix:
+
+```diff
+ use function Later\lazy;
+
+ public function __construct()
+ {
+-    $this->fooBar = $this->makeFooBar();
++    $this->lazyFooBar = lazy($this->makeFooBar());
+ }
+
+ public function usesFooBar()
+ {
+     if ($fooBarReallyRequired) {
+-        $this->fooBar->getResult();
++        $this->lazyFooBar->get()->getResult();
+     }
+ }
+```
+
+We can see, this simple, single-line, change in the original method enabled us to free our program from creating things it may not need, postponing this process until the last moment, while also avoiding any use of callbacks.
+
+## Discussion
 
 The library is completely typed. [PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
 
-To exploit this capability it is recommended to add a convenience method, returning the object itself:
+To exploit this capability it is recommended to declare a variable holding this object as `\Later\Interfaces\Deferred<Type>`.
+
+In this example it will be `Deferred<DeepThought>`:
 
 ```php
-class DeepThought
-{
-    public function solveTheQuestion(): void
-    {
-        // Takes 7½ million years to compute
-    }
+use Later\Interfaces\Deferred;
 
-    public function getAnswer(): int
-    {
-        return 42;
-    }
-
-    /**
-     * Convenience method. Can be called just get(), getThis(), or anything you'd like.
-     */
-    public function getSupercomputer(): self
-    {
-        return $this;
-    }
-}
-```
-
-Perfomance-wise, `get()` is probably the best call.
-
-Then, in a consumer, declare a variable holding this object as a union `Type|Deferred<Type>`.
-
-In our example it will be `DeepThought|Deferred<DeepThought>`: 
-
-```php
 final class HyperIntelligentMice
 {
-    /** @var DeepThought|Deferred<DeepThought> */
+    /** @var Deferred<DeepThought> */
     private $supercomputer;
 
     public function __construct(DeepThought $deepThought)
@@ -96,11 +113,19 @@ final class HyperIntelligentMice
 }
 ```
 
-In this case, a static analyzer will understand what is called, and what is returned.
+Following this approach, a static analyzer will be able to understand what is called, and what is returned.
 
 # Using in tests
 
-The underlying `Deferred` object accepts any iterables, not just generators. This makes it super easy to use in mocks: `new Deferred([$myObject])` and that's it. No need to go through loops assembling closures.
+The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators.
+
+This makes it super easy to use in mocks:
+
+```php
+$this->lazyDependency = lazy([$myObject]);
+```
+
+And that's it. No need to go through loops assembling closures and whatnot.
 
 If nothing else, one can make a common mock for it:
 

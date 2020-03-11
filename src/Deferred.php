@@ -23,15 +23,15 @@ namespace Later;
  * Deferred: a wrapper object.
  *
  * @template T
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 final class Deferred implements Interfaces\Deferred
 {
     /**
-     * @var iterable<T>
+     * @var ?iterable<T>
      */
     private $input;
-
-    private $done;
 
     /**
      * @var T
@@ -44,7 +44,6 @@ final class Deferred implements Interfaces\Deferred
     public function __construct(iterable $input)
     {
         $this->input = $input;
-        $this->done = false;
     }
 
     /**
@@ -52,7 +51,7 @@ final class Deferred implements Interfaces\Deferred
      */
     public function get()
     {
-        if (true === $this->done) {
+        if (null === $this->input) {
             return $this->output;
         }
 
@@ -61,14 +60,14 @@ final class Deferred implements Interfaces\Deferred
             break;
         }
 
-        $this->done = true;
-        /* @phan-suppress-next-line PhanTypeObjectUnsetDeclaredProperty */
-        unset($this->input);
+        $this->input = null;
 
         return $this->output;
     }
 
     /**
+     * @deprecated
+     *
      * @param mixed[] $arguments
      *
      * @return T

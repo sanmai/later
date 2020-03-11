@@ -33,12 +33,4 @@ class DeepThought
     {
         return 42;
     }
-
-    /**
-     * Convenience method. Can be called just get(), getThis(), or anything you'd like.
-     */
-    public function getSupercomputer(): self
-    {
-        return $this;
-    }
 }

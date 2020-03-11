@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Tests\Later;
 
 use PHPUnit\Framework\TestCase;
+use Tests\Later\Examples\Calculator;
 use Tests\Later\Examples\DeepThought;
 use Tests\Later\Examples\HyperIntelligentMice;
 
@@ -69,5 +70,26 @@ final class ExamplesTest extends TestCase
 
         $this->assertSame(42, $mice->getAnswer());
         $this->assertSame(42, $mice->getAnswer());
+    }
+
+    public function testCalculator(): void
+    {
+        $start = microtime(true);
+        $calculator = new Calculator(10);
+        $initTime = microtime(true) - $start;
+
+        $start = microtime(true);
+        $result = (string) $calculator;
+        $calcTime = microtime(true) - $start;
+
+        $this->assertStringStartsWith('3628800', $result);
+
+        $this->assertGreaterThan($initTime, $calcTime);
+
+        $start = microtime(true);
+        $result = (string) $calculator;
+        $nextCalcTime = microtime(true) - $start;
+
+        $this->assertLessThan($calcTime, $nextCalcTime);
     }
 }

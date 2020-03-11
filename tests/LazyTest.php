@@ -19,17 +19,27 @@ declare(strict_types=1);
 
 namespace Tests\Later;
 
-use Later\Deferred;
+use function Later\lazy;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Later\Deferred
+ * @covers \Later\lazy
  */
-final class DeferredTest extends TestCase
+final class LazyTest extends TestCase
 {
+    public function testGetFromGenerator(): void
+    {
+        $later = lazy((static function (): iterable {
+            yield 42;
+        })());
+
+        $this->assertSame(42, $later->get());
+        $this->assertSame(42, $later->get());
+    }
+
     public function testGetFromArray(): void
     {
-        $later = new Deferred([
+        $later = lazy([
             42,
         ]);
 
@@ -39,40 +49,11 @@ final class DeferredTest extends TestCase
 
     public function testGetAnswerFromArray(): void
     {
-        $later = new Deferred([
+        $later = lazy([
             42,
         ]);
 
         $this->assertSame(42, $later->getAnswer());
         $this->assertSame(42, $later->getAnswer());
-    }
-
-    public function testOnlyFirst(): void
-    {
-        $later = new Deferred([
-            42,
-            null,
-        ]);
-
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
-    }
-
-    public function testOnlyOnce(): void
-    {
-        $later = new Deferred($this->makeAnswer());
-
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
-    }
-
-    /**
-     * @return iterable<int>
-     */
-    private function makeAnswer(): iterable
-    {
-        yield 40 + 2;
-
-        $this->fail('Dead code should never be executed');
     }
 }

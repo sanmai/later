@@ -20,32 +20,38 @@ declare(strict_types=1);
 namespace Tests\Later\Examples;
 
 use Later\Interfaces\Deferred;
-use function Later\later;
+use function Later\lazy;
 
 /**
- * An object which is need of a result of expensive calulation.
+ * An object which used to do a lot all at once.
  */
-final class HyperIntelligentMice
+final class Calculator
 {
-    /**
-     * @var Deferred<DeepThought>
-     */
-    private $supercomputer;
+    /** @var Deferred<int> */
+    private $lazyDependency;
 
-    public function __construct(DeepThought $deepThought)
+    public function __construct(int $number)
     {
-        $this->supercomputer = later(
-            /** @return iterable<DeepThought> */
-            static function () use ($deepThought): iterable {
-                $deepThought->solveTheQuestion();
-
-                yield $deepThought;
-            }
+        $this->lazyDependency = lazy(
+            $this->makeDependency($number)
         );
     }
 
-    public function getAnswer(): int
+    /** @return iterable<int> */
+    private function makeDependency(int $number)
     {
-        return $this->supercomputer->get()->getAnswer();
+        $factorial = 1;
+
+        for ($i = 1; $i <= $number; ++$i) {
+            usleep(100);
+            $factorial = $factorial * $i;
+        }
+
+        yield $factorial;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->lazyDependency->get();
     }
 }

@@ -21,12 +21,24 @@ namespace Later;
 
 /**
  * @template T
- * @psalm-param callable():iterable<T> $generator
- * @phan-param callable():(iterable<T>) $generator
  *
- * @return Deferred<T>
+ * @param callable():(iterable<T>) $generator
+ *
+ * @return Interfaces\Deferred<T>
  */
-function later(callable $generator): Deferred
+function later(callable $generator): Interfaces\Deferred
 {
     return new Deferred($generator());
+}
+
+/**
+ * @template T
+ *
+ * @param iterable<T> $iterableOrGenerator
+ *
+ * @return Interfaces\Deferred<T>
+ */
+function lazy(iterable $iterableOrGenerator): Interfaces\Deferred
+{
+    return new Deferred($iterableOrGenerator);
 }
