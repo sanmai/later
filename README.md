@@ -41,7 +41,7 @@ Using a generator instead of a traditional callback comes with a major benefits:
 
 But that's not all: read on.
 
-## Extended use
+## No Callbacks Required
 
 Making a closure generator on the spot isn't always convenient. And not to say these closures are much different from all-too-familiar callbacks. Not at all different from the looks of them.
 
@@ -115,7 +115,7 @@ final class HyperIntelligentMice
 
 Following this approach, a static analyzer will be able to understand what is called, and what is returned.
 
-# Using in tests
+# Writing Tests
 
 The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators.
 
