@@ -15,37 +15,33 @@ The latest version requires PHP 7.1 or greater.
 
 # Use 
 
-To use this pattern you need a generator function, yielding a single item of type you want to produce lazily. 
+To use this pattern you need a generator function, yielding a single item of type you want to produce lazily. Pass it to `later()`, a static wrapper returning a `Deferred` object:
 
 For example:
 
 ```php
-$deepThoughtMaker = function () {
+use function Later\later;
+
+$deferred = later(function () {
     $deepThought = new DeepThought();
     $deepThought->solveTheQuestion();
 
     yield $deepThought;
-})
-```
-
-Now pass it to `later()`, a static wrapper returning a `Deferred` object:
-
-```php
-$deferredMaker = later($deepThoughtMaker);
+});
 ```
 
 And then call `get()` when needed, as many times as needed:
 
 ```php
-$deferredMaker->get()->getAnswer(); // 42
-$deferredMaker->get()->getAnswer(); // same 42
+$deferred->get()->getAnswer(); // 42
+$deferred->get()->getAnswer(); // same 42
 ```
 
-The generator will be executed only once.
+Using a generator instead of a traditional callback comes with a major benefits: any generator comes with a guarantee from the language that it will be used exactly once. You can be sure that it won't be called twice.
 
 # Discussion
 
-The library is completely typed. 
+The library is completely typed. [PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
 
 To exploit this capability it is recommended to add a convenience method, returning the object itself:
 
@@ -102,4 +98,13 @@ final class HyperIntelligentMice
 
 In this case, a static analyzer will understand what is called, and what is returned.
 
-[PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
+# Using in tests
+
+The underlying `Deferred` object accepts any iterables, not just generators. This makes it super easy to use in mocks: `new Deferred([$myObject])` and that's it. No need to go through loops assembling closures.
+
+If nothing else, one can make a common mock for it:
+
+```php
+$this->createMock(\Later\Interfaces\Deferred::class);
+```
+
