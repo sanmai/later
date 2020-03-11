@@ -28,6 +28,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer remove --no-update --dev --no-interaction --no-progress \
+            phan/phan phpstan/phpstan vimeo/psalm \
+            infection/infection friendsofphp/php-cs-fixer \
+            php-coveralls/php-coveralls
           composer update --prefer-dist --no-interaction --no-suggest --no-progress
 
       - name: Execute tests
