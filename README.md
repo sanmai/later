@@ -59,7 +59,7 @@ Consider this diff:
  }
 ```
 
-After adding `Deferred` to the mix:
+After adding `Later\lazy` to the mix:
 
 ```diff
  use function Later\lazy;
