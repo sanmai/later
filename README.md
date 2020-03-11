@@ -1,5 +1,5 @@
 [![Latest Stable Version](https://poser.pugx.org/sanmai/later/v/stable)](https://packagist.org/packages/sanmai/later)
-[![Build Status](https://travis-ci.org/sanmai/later.svg?branch=master)](https://travis-ci.org/sanmai/later)
+[![Build Status](https://travis-ci.com/sanmai/later.svg?branch=master)](https://travis-ci.com/sanmai/later)
 ![CI](https://github.com/sanmai/later/workflows/CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/sanmai/later/badge.svg?branch=master)](https://coveralls.io/github/sanmai/later?branch=master)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/sanmai/later/master)](https://infection.github.io/)
@@ -15,7 +15,9 @@ The latest version requires PHP 7.1 or greater.
 
 # Use 
 
-To use this pattern you need a generator, yielding a single item of type you want to produce lazily. For example:
+To use this pattern you need a generator function, yielding a single item of type you want to produce lazily. 
+
+For example:
 
 ```php
 $deepThoughtMaker = function () {
@@ -26,13 +28,13 @@ $deepThoughtMaker = function () {
 })
 ```
 
-Now you pass it to `later()`:
+Now pass it to `later()`, a static wrapper returning a `Deferred` object:
 
 ```php
 $deferredMaker = later($deepThoughtMaker);
 ```
 
-And when you want to use it, you call `get()` and use it:
+And then call `get()` when needed:
 
 ```php
 $deferredMaker->get()->getAnswer(); // 42
@@ -70,7 +72,11 @@ class DeepThought
 }
 ```
 
-Then, in a consumer, declare a variable holding this object as union `DeepThought|Deferred<DeepThought>`: 
+Perfomance-wise, `get()` is probably the best call.
+
+Then, in a consumer, declare a variable holding this object as a union `Type|Deferred<Type>`.
+
+In our example it will be `DeepThought|Deferred<DeepThought>`: 
 
 ```php
 final class HyperIntelligentMice
@@ -94,4 +100,6 @@ final class HyperIntelligentMice
 }
 ```
 
-In this case a static analyzer will understand what is called and what is returned. 
+In this case, a static analyzer will understand what is called, and what is returned.
+
+[PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
