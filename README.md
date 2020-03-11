@@ -37,7 +37,7 @@ $deferred->get()->getAnswer(); // 42
 $deferred->get()->getAnswer(); // same 42
 ```
 
-Using a generator instead of a traditional callback comes with a major benefits: any generator comes with a guarantee from the language that it will be used exactly once. You can be sure that it won't be called twice.
+Using a generator instead of a traditional callback comes with a major benefit: any generator is guaranteed by the language to be used exactly once. You can be sure that it won't be called twice.
 
 But that's not all: read on.
 
