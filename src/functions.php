@@ -22,9 +22,7 @@ namespace Later;
 /**
  * @template T
  * @psalm-param callable():iterable<T> $generator
- *
- * @phan-param callable():iterable $generator
- * @phan-suppress PhanTemplateTypeNotDeclaredInFunctionParams
+ * @phan-param callable():(iterable<T>) $generator
  *
  * @return Deferred<T>
  */
