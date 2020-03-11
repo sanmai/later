@@ -79,7 +79,7 @@ After adding `Later\lazy` to the mix:
  }
 ```
 
-We can see, this simple, single-line, change in the original method frees our program from creating things it may not need, postponing this process until the last moment, while also avoiding any use of callbacks.
+We can see, this simple, single-line, change in the original method freed our program from creating things it may not need, postponing this process until the last moment, while also avoiding any use of callbacks.
 
 ## Discussion
 
