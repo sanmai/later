@@ -137,12 +137,22 @@ This deferred-but-not-deferred object implements the same interface, and can be 
 
 # Writing Tests
 
-The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators.
+The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators. 
 
 This makes it super easy to use in mocks:
 
 ```php
+use function Later\lazy;
+
 $this->lazyDependency = lazy([$myDependency]);
+```
+
+Yet for constant and already-known answers best to use a non-deferred variant:
+
+```php
+use function Later\now;
+
+$this->lazyDependency = now([$myDependency]);
 ```
 
 And that's it. No need to go through loops assembling closures and whatnot.
