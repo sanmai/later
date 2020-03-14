@@ -120,6 +120,19 @@ final class HyperIntelligentMice
 
 Following this approach, a static analyzer will be able to understand what is called, and what is returned.
 
+## Eager Execution
+
+What if a program calls for `Deferred` object, but lazy evaluation is not required? For example, because a result is already avaiable being loaded from cache.
+
+No problem, there's a function for this:
+
+```php
+$deferred = now($result);
+$deferred->get(); // returns $result
+```
+
+This deferred-but-not-deferred object implements the same interface, and can be used anywhere where a normal `Deffered` object would go.
+
 # Writing Tests
 
 The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators.
