@@ -48,5 +48,4 @@ final class Immediate implements Interfaces\Deferred
     {
         return $this->output;
     }
-
 }

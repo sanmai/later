@@ -43,7 +43,6 @@ function lazy(iterable $iterableOrGenerator): Interfaces\Deferred
     return new Deferred($iterableOrGenerator);
 }
 
-
 /**
  * @template T
  *
