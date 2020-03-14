@@ -144,7 +144,9 @@ This makes it super easy to use in mocks:
 ```php
 use function Later\lazy;
 
-$this->lazyDependency = lazy([$myDependency]);
+$this->lazyDependency = lazy([
+    $myDependency,
+]);
 ```
 
 Yet for constant and already-known answers best to use a non-deferred variant:
@@ -152,7 +154,7 @@ Yet for constant and already-known answers best to use a non-deferred variant:
 ```php
 use function Later\now;
 
-$this->lazyDependency = now([$myDependency]);
+$this->lazyDependency = now($myDependency);
 ```
 
 And that's it. No need to go through loops assembling closures and whatnot.
