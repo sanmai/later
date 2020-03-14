@@ -133,7 +133,7 @@ $deferred = now($result);
 $deferred->get(); // returns $result
 ```
 
-This deferred-but-not-deferred object implements the same interface, and can be used anywhere where a normal `Deffered` object would go.
+This deferred-but-not-deferred object implements the same interface, and can be used anywhere where a normal `Deferred` object would go.
 
 # Writing Tests
 
