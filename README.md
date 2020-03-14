@@ -127,6 +127,8 @@ What if a program calls for `Deferred` object, but lazy evaluation is not requir
 No problem, there's a function for this:
 
 ```php
+use function Later\now;
+
 $deferred = now($result);
 $deferred->get(); // returns $result
 ```
