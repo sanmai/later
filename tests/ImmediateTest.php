@@ -17,47 +17,31 @@
 
 declare(strict_types=1);
 
-namespace Later;
+namespace Tests\Later;
+
+use Later\Immediate;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Immediate: a wrapper object.
- *
- * @template T
+ * @covers \Later\Immediate
  *
  * @internal
  */
-final class Immediate implements Interfaces\Deferred
+final class ImmediateTest extends TestCase
 {
-    /**
-     * @var T
-     */
-    private $output;
-
-    /**
-     * @param T $input
-     */
-    public function __construct($input)
+    public function testGetFromArray(): void
     {
-        $this->output = $input;
+        $later = new Immediate(42);
+
+        $this->assertSame(42, $later->get());
+        $this->assertSame(42, $later->get());
     }
 
-    /**
-     * @return T
-     */
-    public function get()
+    public function testGetAnswerFromArray(): void
     {
-        return $this->output;
-    }
+        $later = new Immediate(42);
 
-    /**
-     * @deprecated
-     *
-     * @param mixed[] $arguments
-     *
-     * @return T
-     */
-    public function __call(string $name = '', array $arguments = [])
-    {
-        return $this->get();
+        $this->assertSame(42, $later->getAnswer());
+        $this->assertSame(42, $later->getAnswer());
     }
 }
