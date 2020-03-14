@@ -20,38 +20,33 @@ declare(strict_types=1);
 namespace Later;
 
 /**
+ * Immediate: a wrapper object.
+ *
  * @template T
  *
- * @param callable():(iterable<T>) $generator
- *
- * @return Interfaces\Deferred<T>
+ * @internal
  */
-function later(callable $generator): Interfaces\Deferred
+final class Immediate implements Interfaces\Deferred
 {
-    return new Deferred($generator());
-}
+    /**
+     * @var T
+     */
+    private $output;
 
-/**
- * @template T
- *
- * @param iterable<T> $iterableOrGenerator
- *
- * @return Interfaces\Deferred<T>
- */
-function lazy(iterable $iterableOrGenerator): Interfaces\Deferred
-{
-    return new Deferred($iterableOrGenerator);
-}
+    /**
+     * @param T $input
+     */
+    public function __construct($input)
+    {
+        $this->output = $input;
+    }
 
+    /**
+     * @return T
+     */
+    public function get()
+    {
+        return $this->output;
+    }
 
-/**
- * @template T
- *
- * @param T $input
- *
- * @return Interfaces\Deferred<T>
- */
-function now($input): Interfaces\Deferred
-{
-    return new Immediate($input);
 }

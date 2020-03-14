@@ -25,6 +25,8 @@ namespace Later;
  * @template T
  *
  * @psalm-suppress PropertyNotSetInConstructor
+ *
+ * @internal
  */
 final class Deferred implements Interfaces\Deferred
 {
