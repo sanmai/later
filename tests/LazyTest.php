@@ -24,6 +24,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\lazy
+ *
+ * @internal
  */
 final class LazyTest extends TestCase
 {

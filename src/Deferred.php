@@ -59,6 +59,7 @@ final class Deferred implements Interfaces\Deferred
 
         foreach ($this->input as $output) {
             $this->output = $output;
+
             break;
         }
 

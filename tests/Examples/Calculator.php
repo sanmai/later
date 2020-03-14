@@ -43,7 +43,7 @@ final class Calculator
         $factorial = 1;
 
         for ($i = 1; $i <= $number; ++$i) {
-            usleep(100);
+            \usleep(100);
             $factorial = $factorial * $i;
         }
 

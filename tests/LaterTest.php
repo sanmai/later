@@ -24,6 +24,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\later
+ *
+ * @internal
  */
 final class LaterTest extends TestCase
 {

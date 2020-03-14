@@ -24,6 +24,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\Deferred
+ *
+ * @internal
  */
 final class DeferredTest extends TestCase
 {
