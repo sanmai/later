@@ -81,7 +81,7 @@ After adding `Later\lazy` to the mix:
 
 We can see, this simple, single-line, change in the original method freed our program from creating things it may not need, postponing this process until the last moment, while also avoiding any use of callbacks.
 
-## Discussion
+## Type Transparency
 
 The library is completely typed. [PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
 
