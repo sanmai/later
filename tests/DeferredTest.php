@@ -20,7 +20,6 @@ declare(strict_types=1);
 namespace Tests\Later;
 
 use Later\Deferred;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\Deferred
@@ -35,8 +34,8 @@ final class DeferredTest extends TestCase
             42,
         ]);
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 
     public function testOnlyFirst(): void
@@ -46,16 +45,16 @@ final class DeferredTest extends TestCase
             null,
         ]);
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 
     public function testOnlyOnce(): void
     {
         $later = new Deferred($this->makeAnswer());
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 
     /**

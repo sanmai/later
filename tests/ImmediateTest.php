@@ -20,7 +20,6 @@ declare(strict_types=1);
 namespace Tests\Later;
 
 use Later\Immediate;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\Immediate
@@ -33,7 +32,7 @@ final class ImmediateTest extends TestCase
     {
         $later = new Immediate(42);
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 }

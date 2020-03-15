@@ -20,7 +20,6 @@ declare(strict_types=1);
 namespace Tests\Later;
 
 use function Later\later;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\later
@@ -38,7 +37,7 @@ final class LaterTest extends TestCase
             }
         );
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 }

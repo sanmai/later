@@ -19,32 +19,21 @@ declare(strict_types=1);
 
 namespace Tests\Later;
 
-use function Later\lazy;
+use Later\Interfaces\Deferred;
 
 /**
- * @covers \Later\lazy
- *
  * @internal
  */
-final class LazyTest extends TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    public function testGetFromGenerator(): void
+    /**
+     * @template T
+     *
+     * @param T           $expected
+     * @param Deferred<T> $deferred
+     */
+    protected function assertDeferredSame($expected, Deferred $deferred): void
     {
-        $later = lazy((static function (): iterable {
-            yield 42;
-        })());
-
-        $this->assertDeferredSame(42, $later);
-        $this->assertDeferredSame(42, $later);
-    }
-
-    public function testGetFromArray(): void
-    {
-        $later = lazy([
-            42,
-        ]);
-
-        $this->assertDeferredSame(42, $later);
-        $this->assertDeferredSame(42, $later);
+        $this->assertSame($expected, $deferred->get());
     }
 }

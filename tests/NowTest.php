@@ -20,7 +20,6 @@ declare(strict_types=1);
 namespace Tests\Later;
 
 use function Later\now;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Later\now
@@ -33,7 +32,7 @@ final class NowTest extends TestCase
     {
         $later = now(42);
 
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
+        $this->assertDeferredSame(42, $later);
+        $this->assertDeferredSame(42, $later);
     }
 }

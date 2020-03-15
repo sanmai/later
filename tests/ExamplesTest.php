@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace Tests\Later;
 
-use PHPUnit\Framework\TestCase;
 use Tests\Later\Examples\Calculator;
 use Tests\Later\Examples\DeepThought;
 use Tests\Later\Examples\HyperIntelligentMice;
