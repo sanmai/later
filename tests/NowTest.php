@@ -19,31 +19,19 @@ declare(strict_types=1);
 
 namespace Tests\Later;
 
-use function Later\lazy;
+use function Later\now;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Later\lazy
+ * @covers \Later\now
  *
  * @internal
  */
-final class LazyTest extends TestCase
+final class NowTest extends TestCase
 {
-    public function testGetFromGenerator(): void
+    public function testGet(): void
     {
-        $later = lazy((static function (): iterable {
-            yield 42;
-        })());
-
-        $this->assertSame(42, $later->get());
-        $this->assertSame(42, $later->get());
-    }
-
-    public function testGetFromArray(): void
-    {
-        $later = lazy([
-            42,
-        ]);
+        $later = now(42);
 
         $this->assertSame(42, $later->get());
         $this->assertSame(42, $later->get());

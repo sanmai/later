@@ -67,16 +67,4 @@ final class Deferred implements Interfaces\Deferred
 
         return $this->output;
     }
-
-    /**
-     * @deprecated
-     *
-     * @param mixed[] $arguments
-     *
-     * @return T
-     */
-    public function __call(string $name = '', array $arguments = [])
-    {
-        return $this->get();
-    }
 }

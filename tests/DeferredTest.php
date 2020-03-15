@@ -39,16 +39,6 @@ final class DeferredTest extends TestCase
         $this->assertSame(42, $later->get());
     }
 
-    public function testGetAnswerFromArray(): void
-    {
-        $later = new Deferred([
-            42,
-        ]);
-
-        $this->assertSame(42, $later->getAnswer());
-        $this->assertSame(42, $later->getAnswer());
-    }
-
     public function testOnlyFirst(): void
     {
         $later = new Deferred([

@@ -36,12 +36,4 @@ final class ImmediateTest extends TestCase
         $this->assertSame(42, $later->get());
         $this->assertSame(42, $later->get());
     }
-
-    public function testGetAnswerFromArray(): void
-    {
-        $later = new Immediate(42);
-
-        $this->assertSame(42, $later->getAnswer());
-        $this->assertSame(42, $later->getAnswer());
-    }
 }

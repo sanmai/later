@@ -169,3 +169,10 @@ $deferredMock
 ;
 ```
 
+# API Overview
+
+|  Method            | Takes                         | Returns     |
+| ------------------ | ----------------------------- | ----------- |
+| `Later\lazy()` | `iterable<T>` | `\Later\Interfaces\Deferred<T>` |
+| `Later\later()` | A generator callback for `T`  | `\Later\Interfaces\Deferred<T>` |
+| `Later\now()` | `T`  | `\Later\Interfaces\Deferred<T>` |
