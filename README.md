@@ -164,6 +164,7 @@ If nothing else, one can make a common mock for it:
 ```php
 $deferredMock = $this->createMock(\Later\Interfaces\Deferred::class);
 $deferredMock
+    ->expects($this->once())
     ->method('get')
     ->willReturn($myDependency)
 ;
