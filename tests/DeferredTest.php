@@ -66,4 +66,22 @@ final class DeferredTest extends TestCase
 
         $this->fail('Dead code should never be executed');
     }
+
+    public function testGetFromEmptyReturnNull(bool $false = false): void
+    {
+        $later = new Deferred($this->yieldsNothing($false));
+
+        $this->assertDeferredSame(null, $later);
+        $this->assertDeferredSame(null, $later);
+    }
+
+    /**
+     * @return iterable<int>
+     */
+    private function yieldsNothing(bool $false = false): iterable
+    {
+        if ($false) {
+            yield 1;
+        }
+    }
 }
