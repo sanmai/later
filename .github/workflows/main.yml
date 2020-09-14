@@ -15,10 +15,10 @@ jobs:
         php-version: ['7.3', '7.4']
         dependencies: ['']
         include:
-          - { php: '8.0', dependencies: '--ignore-platform-req=php' }
+          - { php-version: '8.0', dependencies: '--ignore-platform-req=php' }
     
     continue-on-error: ${{ matrix.php-version == '8.0' }}
-    name: PHP ${{ matrix.php }} ${{ matrix.dependencies }}
+    name: PHP ${{ matrix.php-version }} ${{ matrix.dependencies }}
 
     steps:
       - name: Checkout code
@@ -27,7 +27,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.php-version }}
           coverage: pcov
           tools: composer:v2
 
