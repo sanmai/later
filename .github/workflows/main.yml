@@ -40,7 +40,7 @@ jobs:
             phan/phan phpstan/phpstan vimeo/psalm \
             infection/infection friendsofphp/php-cs-fixer \
             php-coveralls/php-coveralls
-          composer update --prefer-dist --no-interaction --no-suggest --no-progress ${{ matrix.dependencies }}
+          composer update --prefer-dist --no-interaction --no-progress ${{ matrix.dependencies }}
 
       - name: Execute tests
         run: php vendor/bin/phpunit
