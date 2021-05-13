@@ -122,7 +122,7 @@ Following this approach, a static analyzer will be able to understand what is ca
 
 ## Eager Execution
 
-What if a program calls for `Deferred` object, but lazy evaluation is not required? For example, because a result is already avaiable being loaded from a cache.
+What if a program calls for `Deferred` object, but lazy evaluation is not required? For example, because a result is already available being loaded from a cache.
 
 No problem, there's a function for this:
 
