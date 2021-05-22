@@ -13,7 +13,8 @@
         "php": ">=7.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.13",
+        "ergebnis/composer-normalize": "^2.8",
+        "friendsofphp/php-cs-fixer": "^3",
         "infection/infection": ">=0.10.5",
         "phan/phan": ">=2",
         "php-coveralls/php-coveralls": "^2.0",
@@ -23,6 +24,11 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1-dev"
+        }
     },
     "autoload": {
         "psr-4": {
