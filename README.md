@@ -1,7 +1,6 @@
 [![Latest Stable Version](https://poser.pugx.org/sanmai/later/v/stable)](https://packagist.org/packages/sanmai/later)
 ![CI](https://github.com/sanmai/later/workflows/CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/sanmai/later/badge.svg?branch=main)](https://coveralls.io/github/sanmai/later?branch=main)
-[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/sanmai/later/main)](https://infection.github.io/)
 [![Type Coverage](https://shepherd.dev/github/sanmai/later/coverage.svg)](https://shepherd.dev/github/sanmai/later)
 
 This rigorously tested fully-typed library just works. It neither defines nor throws any exceptions.
