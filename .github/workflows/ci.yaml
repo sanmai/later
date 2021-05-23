@@ -1,9 +1,12 @@
+# yamllint disable rule:line-length
+# yamllint disable rule:braces
+
 name: CI
 
 on:
   pull_request:
   push:
-    branches:    
+    branches:
       - master
       - main
 
@@ -57,13 +60,6 @@ jobs:
         run: |
           php vendor/bin/phpunit
 
-      - name: Upload coverage report
-        continue-on-error: false
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          php vendor/bin/php-coveralls -v
-
   validate:
     name: Static Analysis and Validation
     runs-on: ubuntu-latest
@@ -108,3 +104,10 @@ jobs:
       - name: Static Analysis
         run: |
           make ci-analyze --keep-going
+
+      - name: Upload coverage report
+        continue-on-error: false
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          php vendor/bin/php-coveralls -v
