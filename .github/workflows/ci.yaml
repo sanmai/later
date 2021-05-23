@@ -1,0 +1,110 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:    
+      - master
+      - main
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.3', '7.4', '8.0']
+
+    name: Test with PHP ${{ matrix.php-version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: |
+          composer validate --strict
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ matrix.php-version }}-
+            composer-
+
+      - name: Set package version for Composer
+        uses: ergebnis/composer-root-version-action@0.2.1
+        with:
+          branch: "main"
+
+      - name: Install dependencies
+        run: |
+          composer remove --no-update --dev --no-interaction --no-progress \
+            phan/phan phpstan/phpstan vimeo/psalm \
+            infection/infection friendsofphp/php-cs-fixer
+          composer update --prefer-dist --no-interaction --no-progress ${{ matrix.dependencies }}
+
+      - name: Execute tests
+        run: |
+          php vendor/bin/phpunit
+
+      - name: Upload coverage report
+        continue-on-error: false
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          php vendor/bin/php-coveralls -v
+
+  validate:
+    name: Static Analysis and Validation
+    runs-on: ubuntu-latest
+
+    env:
+      PHP_VERSION: 7.4
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ast
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ env.PHP_VERSION }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ env.PHP_VERSION }}-
+            composer-
+
+      - name: Set package version for Composer
+        uses: ergebnis/composer-root-version-action@0.2.1
+        with:
+          branch: "main"
+
+      - name: Install dependencies
+        run: |
+          composer update --prefer-dist --no-interaction --no-progress
+
+      - name: Validate composer.json
+        run: |
+          make composer-validate
+
+      - name: Static Analysis
+        run: |
+          make ci-analyze --keep-going

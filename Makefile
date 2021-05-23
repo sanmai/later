@@ -2,7 +2,6 @@
 
 # Use any most recent PHP version
 PHP=$(shell which php)
-PHPDBG=phpdbg -qrr
 
 # Default parallelism
 JOBS=$(shell nproc)
@@ -52,14 +51,13 @@ all: test
 
 ci-test: SILENT=
 ci-test: prerequisites
-	$(SILENT) $(PHPDBG) $(PHPUNIT) $(PHPUNIT_COVERAGE_CLOVER) --group=$(PHPUNIT_GROUP)
+	$(SILENT) $(PHP) $(PHPUNIT) $(PHPUNIT_COVERAGE_CLOVER) --group=$(PHPUNIT_GROUP)
 
 ci-analyze: SILENT=
 ci-analyze: prerequisites ci-phpunit ci-infection ci-phan ci-phpstan ci-psalm
 
 ci-phpunit: ci-cs
-	$(SILENT) $(PHPDBG) $(PHPUNIT) $(PHPUNIT_ARGS)
-	cp build/logs/junit.xml build/logs/phpunit.junit.xml
+	$(SILENT) $(PHP) $(PHPUNIT) $(PHPUNIT_ARGS)
 
 ci-infection: ci-phpunit
 	$(SILENT) $(PHP) $(INFECTION) $(INFECTION_ARGS)
@@ -90,7 +88,6 @@ test-prerequisites: prerequisites composer.lock
 
 phpunit: cs
 	$(SILENT) $(PHP) $(PHPUNIT) $(PHPUNIT_ARGS) --verbose
-	cp build/logs/junit.xml build/logs/phpunit.junit.xml
 	$(SILENT) $(PHP) $(INFECTION) $(INFECTION_ARGS)
 
 analyze: cs .phpstan.neon psalm.xml
@@ -127,20 +124,3 @@ build/cache:
 .PHONY: report-php-version
 report-php-version:
 	# Using $(PHP)
-
-##############################################################
-# Quick development testing procedure                        #
-##############################################################
-
-PHP_VERSIONS=php7.0 php7.2
-
-.PHONY: quick
-quick:
-	make --no-print-directory -j test-all
-
-.PHONY: test-all
-test-all: $(PHP_VERSIONS)
-
-.PHONY: $(PHP_VERSIONS)
-$(PHP_VERSIONS): cs
-	@make --no-print-directory PHP=$@ PHP_CS_FIXER=/bin/true
