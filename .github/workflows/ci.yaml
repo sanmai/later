@@ -111,3 +111,32 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           php vendor/bin/php-coveralls -v
+
+  coding-standards:
+    name: Coding Standards
+    runs-on: ubuntu-latest
+
+    env:
+      PHP_VERSION: 7.4
+      PHP_CS_FIXER_VERSION: v3.0.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: php-cs-fixer:${{ env.PHP_CS_FIXER_VERSION }}
+
+      - name: Restore PHP-CS-Fixer cache
+        uses: actions/cache@v2
+        with:
+          path: .php_cs.cache
+          key: "php-cs-fixer"
+          restore-keys: "php-cs-fixer"
+
+      - name: Run PHP-CS-Fixer, version ${{ env.PHP_CS_FIXER_VERSION }}
+        run: |
+          php-cs-fixer fix --diff --dry-run --verbose
