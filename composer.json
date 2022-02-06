@@ -14,11 +14,11 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.8",
-        "friendsofphp/php-cs-fixer": "^3",
+        "friendsofphp/php-cs-fixer": "^3.5",
         "infection/infection": ">=0.18",
         "phan/phan": ">=2",
         "php-coveralls/php-coveralls": "^2.0",
-        "phpstan/phpstan": ">=0.10 <1.0",
+        "phpstan/phpstan": ">=1.4.5",
         "phpunit/phpunit": ">=7.4",
         "vimeo/psalm": ">=2"
     },
@@ -37,11 +37,7 @@
     },
     "config": {
         "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "ergebnis/composer-normalize": true,
-            "infection/extension-installer": true
-        }
+        "allow-plugins": true
     },
     "extra": {
         "branch-alias": {
