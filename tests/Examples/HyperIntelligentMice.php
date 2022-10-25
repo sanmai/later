@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Tests\Later\Examples;
 
 use Later\Interfaces\Deferred;
+
 use function Later\lazy;
 
 /**
