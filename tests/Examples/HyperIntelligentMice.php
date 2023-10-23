@@ -24,7 +24,7 @@ use Later\Interfaces\Deferred;
 use function Later\lazy;
 
 /**
- * An object which is need of a result of expensive calulation.
+ * An object which is need of a result of expensive calculation.
  */
 final class HyperIntelligentMice
 {
