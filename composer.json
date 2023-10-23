@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.4"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.8",
@@ -19,7 +19,7 @@
         "phan/phan": ">=2",
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan": ">=1.4.5",
-        "phpunit/phpunit": ">=7.4 <10",
+        "phpunit/phpunit": ">=9.5",
         "vimeo/psalm": ">=2"
     },
     "autoload": {
@@ -41,7 +41,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.1.x-dev"
+            "dev-main": "0.2.x-dev"
         }
     }
 }
