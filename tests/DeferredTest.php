@@ -103,6 +103,7 @@ final class DeferredTest extends TestCase
             $this->assertSame($e, $e2);
         }
 
+        // Make sure the input is discarded
         $reflectionClass = new \ReflectionClass($later);
         $property = $reflectionClass->getProperty('input');
         $property->setAccessible(true);
