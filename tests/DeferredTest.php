@@ -104,6 +104,9 @@ final class DeferredTest extends TestCase
         }
     }
 
+    /**
+     * @return iterable<int>
+     */
     private function generatorThrows(bool $throw = false): iterable
     {
         if ($throw) {
