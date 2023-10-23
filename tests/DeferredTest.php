@@ -76,7 +76,7 @@ final class DeferredTest extends TestCase
     }
 
     /**
-     * @return iterable<int>
+     * @return iterable<null|int>
      */
     private function yieldsNothing(bool $false = false): iterable
     {
@@ -102,6 +102,11 @@ final class DeferredTest extends TestCase
         } catch (\InvalidArgumentException $e2) {
             $this->assertSame($e, $e2);
         }
+
+        $reflectionClass = new \ReflectionClass($later);
+        $property = $reflectionClass->getProperty('input');
+        $property->setAccessible(true);
+        $this->assertNull($property->getValue($later));
     }
 
     /**
