@@ -23,6 +23,7 @@ namespace Later;
  * Deferred: a wrapper object.
  *
  * @template T
+ *
  * @template-implements Interfaces\Deferred<T>
  *
  * @psalm-suppress PropertyNotSetInConstructor
