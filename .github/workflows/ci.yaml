@@ -45,11 +45,6 @@ jobs:
             composer-${{ matrix.php-version }}-
             composer-
 
-      - name: Set package version for Composer
-        uses: ergebnis/composer-root-version-action@0.2.1
-        with:
-          branch: main
-
       - name: Install dependencies
         run: |
           composer remove --no-update --dev --no-interaction --no-progress \
@@ -88,11 +83,6 @@ jobs:
           restore-keys: |
             composer-${{ env.PHP_VERSION }}-
             composer-
-
-      - name: Set package version for Composer
-        uses: ergebnis/composer-root-version-action@0.2.1
-        with:
-          branch: main
 
       - name: Install dependencies
         run: |
