@@ -10,8 +10,10 @@ on:
       - master
       - main
 
-jobs:
+env:
+  COMPOSER_ROOT_VERSION: dev-main
 
+jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
