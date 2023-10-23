@@ -45,7 +45,7 @@ final class Calculator
 
         for ($i = 1; $i <= $number; ++$i) {
             \usleep(100);
-            $factorial = $factorial * $i;
+            $factorial *= $i;
         }
 
         yield $factorial;
