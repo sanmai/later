@@ -32,7 +32,7 @@ final class LaterTest extends TestCase
     {
         $later = later(
             /** @return iterable<int> */
-            function (): iterable {
+            static function (): iterable {
                 yield 42;
             }
         );

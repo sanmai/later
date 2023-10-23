@@ -76,7 +76,7 @@ final class DeferredTest extends TestCase
     }
 
     /**
-     * @return iterable<int>
+     * @return iterable<null|int>
      */
     private function yieldsNothing(bool $false = false): iterable
     {

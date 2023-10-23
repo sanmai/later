@@ -24,6 +24,8 @@ namespace Later;
  *
  * @template T
  *
+ * @template-implements Interfaces\Deferred<T>
+ *
  * @internal
  */
 final class Immediate implements Interfaces\Deferred

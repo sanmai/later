@@ -10,17 +10,16 @@ on:
       - master
       - main
 
-jobs:
+env:
+  COMPOSER_ROOT_VERSION: 0.1.x-dev
 
+jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
         coverage: ['pcov']
-        include:
-          - php-version: '7.1'
-            coverage: xdebug
 
     name: Test with PHP ${{ matrix.php-version }}
 
@@ -48,11 +47,6 @@ jobs:
             composer-${{ matrix.php-version }}-
             composer-
 
-      - name: Set package version for Composer
-        uses: ergebnis/composer-root-version-action@0.2.1
-        with:
-          branch: main
-
       - name: Install dependencies
         run: |
           composer remove --no-update --dev --no-interaction --no-progress \
@@ -69,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PHP_VERSION: '8.1'
+      PHP_VERSION: '8.2'
 
     steps:
       - name: Checkout code
@@ -91,11 +85,6 @@ jobs:
           restore-keys: |
             composer-${{ env.PHP_VERSION }}-
             composer-
-
-      - name: Set package version for Composer
-        uses: ergebnis/composer-root-version-action@0.2.1
-        with:
-          branch: main
 
       - name: Install dependencies
         run: |
@@ -121,8 +110,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PHP_VERSION: '8.1'
-      PHP_CS_FIXER_VERSION: 'v3.12.0'
+      PHP_VERSION: '8.2'
+      PHP_CS_FIXER_VERSION: 'v3.35.1'
 
     steps:
       - name: Checkout
