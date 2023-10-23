@@ -23,6 +23,7 @@ namespace Later;
  * Immediate: a wrapper object.
  *
  * @template T
+ * @template-implements Interfaces\Deferred<T>
  *
  * @internal
  */

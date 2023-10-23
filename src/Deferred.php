@@ -23,6 +23,7 @@ namespace Later;
  * Deferred: a wrapper object.
  *
  * @template T
+ * @template-implements Interfaces\Deferred<T>
  *
  * @psalm-suppress PropertyNotSetInConstructor
  *
@@ -41,7 +42,7 @@ final class Deferred implements Interfaces\Deferred
     private $output;
 
     /**
-     * @var \Throwable
+     * @var ?\Throwable
      */
     private $error;
 
