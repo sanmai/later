@@ -15,11 +15,11 @@
     "require-dev": {
         "ergebnis/composer-normalize": "^2.8",
         "friendsofphp/php-cs-fixer": "^3.35.1",
-        "infection/infection": ">=0.18",
+        "infection/infection": ">=0.27.6",
         "phan/phan": ">=2",
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan": ">=1.4.5",
-        "phpunit/phpunit": ">=9.5",
+        "phpunit/phpunit": ">=9.5 <10",
         "vimeo/psalm": ">=2"
     },
     "autoload": {
