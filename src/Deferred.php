@@ -43,11 +43,17 @@ final class Deferred implements Interfaces\Deferred
     private $output;
 
     /**
+     * @var ?\Throwable
+     */
+    private $error;
+
+    /**
      * @param iterable<T> $input
      */
     public function __construct(iterable $input)
     {
         $this->input = $input;
+        $this->error = null;
     }
 
     /**
@@ -55,17 +61,27 @@ final class Deferred implements Interfaces\Deferred
      */
     public function get()
     {
+        if (null !== $this->error) {
+            throw $this->error;
+        }
+
         if (null === $this->input) {
             return $this->output;
         }
 
-        foreach ($this->input as $output) {
-            $this->output = $output;
+        try {
+            foreach ($this->input as $output) {
+                $this->output = $output;
 
-            break;
+                break;
+            }
+        } catch (\Throwable $e) {
+            $this->error = $e;
+
+            throw $e;
+        } finally {
+            $this->input = null;
         }
-
-        $this->input = null;
 
         return $this->output;
     }

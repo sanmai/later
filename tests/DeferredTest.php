@@ -84,4 +84,41 @@ final class DeferredTest extends TestCase
             yield 1;
         }
     }
+
+    public function testThrowsSame(): void
+    {
+        $later = new Deferred($this->generatorThrows(true));
+        $e = null;
+
+        try {
+            $this->assertDeferredSame(1, $later);
+            $this->fail('Should have thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame(__CLASS__, $e->getMessage());
+        }
+
+        try {
+            $this->assertDeferredSame(1, $later);
+        } catch (\InvalidArgumentException $e2) {
+            $this->assertSame($e, $e2);
+        }
+
+        // Make sure the input is discarded
+        $reflectionClass = new \ReflectionClass($later);
+        $property = $reflectionClass->getProperty('input');
+        $property->setAccessible(true);
+        $this->assertNull($property->getValue($later));
+    }
+
+    /**
+     * @return iterable<int>
+     */
+    private function generatorThrows(bool $throw = false): iterable
+    {
+        if ($throw) {
+            throw new \InvalidArgumentException(__CLASS__);
+        }
+
+        yield 1;
+    }
 }
