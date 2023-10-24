@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace Later;
 
+use Throwable;
+
 /**
  * Deferred: a wrapper object.
  *
@@ -26,26 +28,22 @@ namespace Later;
  *
  * @template-implements Interfaces\Deferred<T>
  *
- * @psalm-suppress PropertyNotSetInConstructor
- *
  * @internal
+ * @final
  */
-final class Deferred implements Interfaces\Deferred
+class Deferred implements Interfaces\Deferred
 {
     /**
      * @var ?iterable<T>
      */
-    private $input;
+    private ?iterable $input;
 
     /**
      * @var T
      */
     private $output;
 
-    /**
-     * @var ?\Throwable
-     */
-    private $error;
+    private ?Throwable $error;
 
     /**
      * @param iterable<T> $input
@@ -75,7 +73,7 @@ final class Deferred implements Interfaces\Deferred
 
                 break;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->error = $e;
 
             throw $e;
