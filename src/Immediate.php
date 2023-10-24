@@ -27,8 +27,9 @@ namespace Later;
  * @template-implements Interfaces\Deferred<T>
  *
  * @internal
+ * @final
  */
-final class Immediate implements Interfaces\Deferred
+class Immediate implements Interfaces\Deferred
 {
     /**
      * @var T

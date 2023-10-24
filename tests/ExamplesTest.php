@@ -23,6 +23,8 @@ use Tests\Later\Examples\Calculator;
 use Tests\Later\Examples\DeepThought;
 use Tests\Later\Examples\HyperIntelligentMice;
 
+use function microtime;
+
 /**
  * @coversNothing
  *
@@ -75,21 +77,21 @@ final class ExamplesTest extends TestCase
 
     public function testCalculator(): void
     {
-        $start = \microtime(true);
+        $start = microtime(true);
         $calculator = new Calculator(10);
-        $initTime = \microtime(true) - $start;
+        $initTime = microtime(true) - $start;
 
-        $start = \microtime(true);
+        $start = microtime(true);
         $result = (string) $calculator;
-        $calcTime = \microtime(true) - $start;
+        $calcTime = microtime(true) - $start;
 
         $this->assertStringStartsWith('3628800', $result);
 
         $this->assertGreaterThan($initTime, $calcTime);
 
-        $start = \microtime(true);
+        $start = microtime(true);
         $result = (string) $calculator;
-        $nextCalcTime = \microtime(true) - $start;
+        $nextCalcTime = microtime(true) - $start;
 
         $this->assertLessThan($calcTime, $nextCalcTime);
     }

@@ -10,4 +10,8 @@
         <directory name="src" />
         <directory name="tests/Examples" />
     </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+    </issueHandlers>
 </psalm>
