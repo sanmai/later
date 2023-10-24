@@ -1,45 +1,45 @@
-# yamllint disable rule:line-length
-# yamllint disable rule:braces
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
 name: CI
 
 on:
-  pull_request:
+  pull_request: null
   push:
     branches:
-      - master
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+    
 env:
-  COMPOSER_ROOT_VERSION: 0.1.x-dev
+  COMPOSER_ROOT_VERSION: '0.1.x-dev'
 
 jobs:
   tests:
+    name: Test with PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
-        coverage: ['pcov']
-
-    name: Test with PHP ${{ matrix.php-version }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: ${{ matrix.coverage }}
+          coverage: pcov
           tools: composer:v2
 
       - name: Validate composer.json
         run: |
-          composer validate --strict
+          make composer-validate
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/composer
           key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
@@ -52,38 +52,38 @@ jobs:
           composer remove --no-update --dev --no-interaction --no-progress \
             phan/phan phpstan/phpstan vimeo/psalm \
             infection/infection friendsofphp/php-cs-fixer
-          composer update --prefer-dist --no-interaction --no-progress ${{ matrix.dependencies }}
+          composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
         run: |
-          php vendor/bin/phpunit
+          ./vendor/bin/phpunit
 
   validate:
     name: Static Analysis and Validation
     runs-on: ubuntu-latest
-
-    env:
-      PHP_VERSION: '8.2'
+    strategy:
+      matrix:
+        php-version: ['8.2']
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ env.PHP_VERSION }}
+          php-version: ${{ matrix.php-version }}
           extensions: ast
           coverage: pcov
           tools: composer:v2
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/composer
-          key: composer-${{ env.PHP_VERSION }}-${{ hashFiles('composer.*') }}
+          key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
           restore-keys: |
-            composer-${{ env.PHP_VERSION }}-
+            composer-${{ matrix.php-version }}-
             composer-
 
       - name: Install dependencies
@@ -101,35 +101,35 @@ jobs:
       - name: Upload coverage report
         continue-on-error: false
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ github.token }}
         run: |
-          php vendor/bin/php-coveralls -v
+          ./vendor/bin/php-coveralls -v
 
   coding-standards:
     name: Coding Standards
     runs-on: ubuntu-latest
-
-    env:
-      PHP_VERSION: '8.2'
-      PHP_CS_FIXER_VERSION: 'v3.35.1'
+    strategy:
+      matrix:
+        php-version: ['8.2']
+        php-cs-fixer-version: ['v3.35.1']
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ env.PHP_VERSION }}
-          tools: php-cs-fixer:${{ env.PHP_CS_FIXER_VERSION }}
+          php-version: ${{ matrix.php-version }}
+          tools: php-cs-fixer:${{ matrix.php-cs-fixer-version }}
 
       - name: Restore PHP-CS-Fixer cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .php_cs.cache
           key: php-cs-fixer
           restore-keys: php-cs-fixer
 
-      - name: Run PHP-CS-Fixer, version ${{ env.PHP_CS_FIXER_VERSION }}
+      - name: Run PHP-CS-Fixer ${{ matrix.php-cs-fixer-version }}
         run: |
           php-cs-fixer fix --diff --dry-run --verbose
