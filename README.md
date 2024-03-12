@@ -9,7 +9,7 @@ This rigorously tested fully-typed library just works. It neither defines nor th
 
     composer require sanmai/later
 
-The latest version requires PHP 7.1 or greater.
+The latest version requires PHP 7.4 or greater.
 
 # Use 
 
