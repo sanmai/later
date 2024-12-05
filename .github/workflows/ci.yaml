@@ -18,7 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
+        php-version: 
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
         coverage: ['pcov']
 
     name: Test with PHP ${{ matrix.php-version }}
@@ -63,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PHP_VERSION: '8.2'
+      PHP_VERSION: '8.3'
 
     steps:
       - name: Checkout code
@@ -110,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PHP_VERSION: '8.2'
+      PHP_VERSION: '8.3'
       PHP_CS_FIXER_VERSION: 'v3.35.1'
 
     steps:
