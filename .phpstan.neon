@@ -1,5 +1,4 @@
 parameters:
-    checkGenericClassInNonGenericObjectType: false
     inferPrivatePropertyTypeFromConstructor: true
     level: max
     paths:
