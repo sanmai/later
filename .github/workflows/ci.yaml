@@ -117,7 +117,7 @@ jobs:
 
     env:
       PHP_VERSION: '8.3'
-      PHP_CS_FIXER_VERSION: 'v3.35.1'
+      PHP_CS_FIXER_VERSION: 'v3.65.0'
 
     steps:
       - name: Checkout
