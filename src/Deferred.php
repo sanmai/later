@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace Later;
 
 use Throwable;
+use Override;
 
 /**
  * Deferred: a wrapper object.
@@ -58,6 +59,7 @@ class Deferred implements Interfaces\Deferred
     /**
      * @return T
      */
+    #[Override]
     public function get()
     {
         if (null !== $this->error) {

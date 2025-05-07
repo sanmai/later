@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Later;
 
+use Override;
+
 /**
  * Immediate: a wrapper object.
  *
@@ -48,6 +50,7 @@ class Immediate implements Interfaces\Deferred
     /**
      * @return T
      */
+    #[Override]
     public function get()
     {
         return $this->output;
