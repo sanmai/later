@@ -23,7 +23,7 @@ namespace Tests\Later\Examples;
 /**
  * An object which performs a very expensive computation.
  */
-final class DeepThought
+class DeepThought
 {
     public function solveTheQuestion(): void
     {
