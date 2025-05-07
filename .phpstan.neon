@@ -3,6 +3,5 @@ parameters:
     level: max
     paths:
         - src
-        - tests
     ignoreErrors:
 #        - "#iterable<T>.* does not accept iterable<T>#"
