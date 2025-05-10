@@ -89,7 +89,10 @@ class Deferred implements Interfaces\Deferred
     }
 
     /**
-     * @param array<mixed> $args
+     * Forwards the call to the resolved object; PHP throws \Error if the method is missing.
+     * MixedMethodCall is suppressed because Psalm cannot infer methods on the generic type.
+     *
+     * @param array<mixed> $args Forwarded variadic arguments.
      * @psalm-suppress MixedMethodCall
      */
     public function __call(string $name, array $args): mixed
