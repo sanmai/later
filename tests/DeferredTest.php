@@ -23,6 +23,7 @@ namespace Tests\Later;
 use Later\Deferred;
 use ReflectionClass;
 use InvalidArgumentException;
+use Tests\Later\Examples\MagicalFoo;
 
 use function Later\later;
 
@@ -129,26 +130,17 @@ final class DeferredTest extends TestCase
 
     public function testMagicCall(): void
     {
-        $value = new class {
-            public function getAnswer(): int
-            {
-                return 42;
-            }
-        };
+        $deferred = later(fn() => yield new MagicalFoo());
 
-        $deferred = later(fn() => yield $value);
-
+        /** @var Deferred<MagicalFoo> $deferred */
         self::assertSame(42, $deferred->getAnswer());
     }
 
     public function testMagicGet(): void
     {
-        $value = new class {
-            public int $answer = 42;
-        };
+        $deferred = later(fn() => yield new MagicalFoo());
 
-        $deferred = later(fn() => yield $value);
-
+        /** @var Deferred<MagicalFoo> $deferred */
         self::assertSame(42, $deferred->answer);
     }
 
