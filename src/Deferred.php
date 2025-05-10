@@ -88,6 +88,9 @@ class Deferred implements Interfaces\Deferred
         return $this->output;
     }
 
+    /**
+     * @param array<mixed> $args
+     */
     public function __call(string $name, array $args): mixed
     {
         return $this->get()->{$name}(...$args);
