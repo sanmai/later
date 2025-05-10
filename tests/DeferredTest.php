@@ -24,6 +24,8 @@ use Later\Deferred;
 use ReflectionClass;
 use InvalidArgumentException;
 
+use function Later\later;
+
 /**
  * @covers \Later\Deferred
  *
@@ -124,4 +126,36 @@ final class DeferredTest extends TestCase
 
         yield 1;
     }
+
+    public function testMagicCall(): void
+    {
+        $value = new class {
+            public function getAnswer(): int
+            {
+                return 42;
+            }
+        };
+
+        $deferred = later(fn() => yield $value);
+
+        self::assertSame(42, $deferred->getAnswer());
+    }
+
+    public function testMagicGet(): void
+    {
+        $value = new class {
+            public int $answer = 42;
+        };
+
+        $deferred = later(fn() => yield $value);
+
+        self::assertSame(42, $deferred->answer);
+    }
+
+
+
+
+
+
+
 }

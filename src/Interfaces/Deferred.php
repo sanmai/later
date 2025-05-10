@@ -22,6 +22,7 @@ namespace Later\Interfaces;
 
 /**
  * @template T
+ * @mixin T
  */
 interface Deferred
 {
