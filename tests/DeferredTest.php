@@ -143,11 +143,4 @@ final class DeferredTest extends TestCase
         /** @var Deferred<MagicalFoo> $deferred */
         self::assertSame(42, $deferred->answer);
     }
-
-
-
-
-
-
-
 }
