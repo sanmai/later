@@ -90,6 +90,7 @@ class Deferred implements Interfaces\Deferred
 
     /**
      * @param array<mixed> $args
+     * @psalm-suppress MixedMethodCall
      */
     public function __call(string $name, array $args): mixed
     {
