@@ -22,7 +22,6 @@ namespace Later;
 
 /**
  * @template T
- * @mixin T
  *
  * @param callable():(iterable<T>) $generator
  *
@@ -35,7 +34,6 @@ function later(callable $generator): Interfaces\Deferred
 
 /**
  * @template T
- * @mixin T
  *
  * @param iterable<T> $iterableOrGenerator
  *
@@ -48,7 +46,6 @@ function lazy(iterable $iterableOrGenerator): Interfaces\Deferred
 
 /**
  * @template T
- * @mixin T
  *
  * @param T $input
  *
