@@ -149,7 +149,7 @@ This deferred-but-not-deferred object implements the same interface, and can be 
 
 # Writing Tests
 
-The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators. 
+The underlying `Deferred` object is fairly lax about input types. It will be happy to accept any `iterable`, not just generators.
 
 This makes it super easy to use in mocks:
 
@@ -184,8 +184,8 @@ $deferredMock
 
 # API Overview
 
-|  Method            | Takes                         | Returns     |
-| ------------------ | ----------------------------- | ----------- |
-| `Later\lazy()` | `iterable<T>` | `\Later\Interfaces\Deferred<T>` |
-| `Later\later()` | A generator callback for `T`  | `\Later\Interfaces\Deferred<T>` |
-| `Later\now()` | `T`  | `\Later\Interfaces\Deferred<T>` |
+| Method          | Takes                        | Returns                         |
+| --------------- | ---------------------------- | ------------------------------- |
+| `Later\lazy()`  | `iterable<T>`                | `\Later\Interfaces\Deferred<T>` |
+| `Later\later()` | A generator callback for `T` | `\Later\Interfaces\Deferred<T>` |
+| `Later\now()`   | `T`                          | `\Later\Interfaces\Deferred<T>` |
