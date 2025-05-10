@@ -7,11 +7,13 @@ This rigorously tested fully-typed library just works. It neither defines nor th
 
 # Install
 
-    composer require sanmai/later
+```
+composer require sanmai/later
+```
 
 The latest version requires PHP 7.4 or greater.
 
-# Use 
+# Use
 
 To use this pattern you need a generator function, yielding a single item of type you want to produce lazily. Pass it to `later()`, a static wrapper returning a `Deferred` object:
 
@@ -83,7 +85,7 @@ We can see, this simple, single-line, change in the original method freed our pr
 
 The library is completely typed. [PHPStan](https://github.com/phpstan/phpstan), [Psalm](https://github.com/vimeo/psalm), and [Phan](https://github.com/phan/phan) are all routinely supported.
 
-To exploit this capability it is recommended to declare a variable holding this object as `\Later\Interfaces\Deferred<Type>`.
+To use this capability it is recommended to declare a variable holding this object as `\Later\Interfaces\Deferred<Type>`.
 
 In this example it will be `Deferred<DeepThought>`:
 
@@ -116,7 +118,19 @@ final class HyperIntelligentMice
 }
 ```
 
-Following this approach, a static analyzer will be able to understand what is called, and what is returned.
+Following this approach, a static analyzer or IDE will be able to understand what is called, and what is returned.
+
+### Proxy Syntax
+
+The library supports convenient proxy syntax for accessing methods and properties directly from the deferred object:
+
+```php
+/** @var \Later\Interfaces\Deferred<DeepThought> $deferred */
+$deferred->getAnswer(); // 42
+$deferred->answer;      // 42
+```
+
+With the explicit type IDEs such as PhpStorm can autocomplete proxied members.
 
 ## Eager Execution
 
