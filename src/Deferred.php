@@ -27,6 +27,7 @@ use Override;
  * Deferred: a wrapper object.
  *
  * @template T
+ * @mixin T
  *
  * @template-implements Interfaces\Deferred<T>
  *
@@ -85,5 +86,22 @@ class Deferred implements Interfaces\Deferred
         }
 
         return $this->output;
+    }
+
+    /**
+     * Forwards the call to the resolved object; PHP throws \Error if the method is missing.
+     * MixedMethodCall is suppressed because Psalm cannot infer methods on the generic type.
+     *
+     * @param array<mixed> $args Forwarded variadic arguments.
+     * @psalm-suppress MixedMethodCall
+     */
+    public function __call(string $name, array $args): mixed
+    {
+        return $this->get()->{$name}(...$args);
+    }
+
+    public function __get(string $name): mixed
+    {
+        return $this->get()->$name;
     }
 }

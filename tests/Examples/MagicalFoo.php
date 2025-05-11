@@ -16,18 +16,14 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+namespace Tests\Later\Examples;
 
-namespace Later\Interfaces;
-
-/**
- * @template T
- * @mixin T
- */
-interface Deferred
+class MagicalFoo
 {
-    /**
-     * @return T
-     */
-    public function get();
+    public int $answer = 42;
+
+    public function getAnswer(): int
+    {
+        return 42;
+    }
 }
