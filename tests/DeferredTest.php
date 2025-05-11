@@ -133,7 +133,7 @@ final class DeferredTest extends TestCase
         $deferred = later(fn() => yield new MagicalFoo());
 
         /** @var Deferred<MagicalFoo> $deferred */
-        self::assertSame(42, $deferred->getAnswer());
+        $this->assertSame(42, $deferred->getAnswer());
     }
 
     public function testMagicGet(): void
@@ -141,6 +141,6 @@ final class DeferredTest extends TestCase
         $deferred = later(fn() => yield new MagicalFoo());
 
         /** @var Deferred<MagicalFoo> $deferred */
-        self::assertSame(42, $deferred->answer);
+        $this->assertSame(42, $deferred->answer);
     }
 }
