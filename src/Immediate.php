@@ -28,6 +28,7 @@ use Override;
  * @template T
  *
  * @template-implements Interfaces\Deferred<T>
+ * @implements Interfaces\Deferred<T>
  *
  * @internal
  * @final
