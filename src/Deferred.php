@@ -30,6 +30,7 @@ use Override;
  * @mixin T
  *
  * @template-implements Interfaces\Deferred<T>
+ * @implements Interfaces\Deferred<T>
  *
  * @internal
  * @final
